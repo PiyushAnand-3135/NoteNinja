@@ -91,12 +91,13 @@ def edit_font_size():
             messagebox.showerror("Invalid Input", "Please enter a valid font size")
 
     font_size_win = Toplevel(root)
+    font_size_win.geometry("220x180")
     font_size_win.title("Edit Font Size")
     font_size_label = Label(font_size_win, text="Enter font size:")
     font_size_label.pack(pady=10)
-    font_size_entry = Entry(font_size_win)
+    font_size_entry = Entry(font_size_win, width=20)
     font_size_entry.pack(pady=10)
-    set_button = Button(font_size_win, text="Set", command=set_font_size)
+    set_button = Button(font_size_win, text="Set", command=set_font_size, width=10)
     set_button.pack(pady=10)
 
 
