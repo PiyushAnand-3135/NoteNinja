@@ -14,7 +14,6 @@ def is_text_area_empty():
     content = text_area.get("1.0", "end-1c").strip()
     return len(content) == 0
 
-
 def new_file():
     global saved
     if saved or is_text_area_empty():
@@ -27,7 +26,6 @@ def new_file():
             text_area.delete("1.0", END)
             saved = False
 
-
 def open_file():
     global file_path, saved
     file_path = filedialog.askopenfilename(defaultextension=".txt",
@@ -38,7 +36,6 @@ def open_file():
             text_area.delete("1.0", "end")
             text_area.insert("1.0", content)
         saved = True
-
 
 def save_file():
     global saved, file_path
@@ -52,7 +49,6 @@ def save_file():
         with open(file_path, 'w') as f:
             f.write(text_area.get("1.0", "end-1c"))
 
-
 def save_as():
     global saved, file_path
     file_path = filedialog.asksaveasfilename(defaultextension=".txt",
@@ -61,7 +57,6 @@ def save_as():
         saved = True
         with open(file_path, 'w') as f:
             f.write(text_area.get("1.0", "end-1c"))
-
 
 def exit_app():
     global saved
@@ -72,14 +67,11 @@ def exit_app():
         if quit_confirm:
             root.quit()
 
-
 def about():
     messagebox.showinfo("About NoteNinja", "NoteNinja is a text editor made by Piyush Anand")
 
-
 def report_problem():
     messagebox.showinfo("Report a problem", "Write a mail on anandpiyush404@gmail.com")
-
 
 def edit_font_size():
     def set_font_size():
@@ -99,7 +91,6 @@ def edit_font_size():
     font_size_entry.pack(pady=10)
     set_button = Button(font_size_win, text="Set", command=set_font_size, width=10)
     set_button.pack(pady=10)
-
 
 # Frame for the menu bar
 menu_frame = Frame(root)
@@ -135,9 +126,16 @@ root.config(menu=my_menu)
 text_frame = Frame(root)
 text_frame.pack(expand=True, fill='both')
 
+# Add a Scrollbar to the text area
+scroll_bar = Scrollbar(text_frame)
+scroll_bar.pack(side=RIGHT, fill=Y)
+
 # Input text area
-text_area = Text(text_frame, wrap=WORD, undo=True, font=("Arial", default_font_size))
+text_area = Text(text_frame, wrap=WORD, undo=True, font=("Arial", default_font_size), yscrollcommand=scroll_bar.set)
 text_area.pack(expand=True, fill='both')
+
+# Configure the Scrollbar
+scroll_bar.config(command=text_area.yview)
 
 # Set focus to the text area
 text_area.focus_set()
