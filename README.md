@@ -6,4 +6,11 @@ NoteNinja is a sleek and powerful text editor crafted with Python, designed to e
 
 
 
+
+
+
+
+
+
+
 ![logo](https://github.com/user-attachments/assets/785df00e-20a7-4bd9-ba31-82b2943c73ba)
