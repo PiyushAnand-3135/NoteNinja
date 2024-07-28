@@ -105,7 +105,6 @@ menu_frame = Frame(root)
 menu_frame.pack(side=TOP, fill=X)
 
 # MenuBar
-
 my_menu = Menu(root)
 
 # File Menu
