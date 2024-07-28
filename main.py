@@ -6,7 +6,7 @@ root = Tk()
 root.geometry("1080x620")
 root.title("NoteNinja - The OpenSource text editor")
 
-saved = False  # Ensure saved is defined in the global scope
+saved = False
 file_path = None  # Keep track of the file path
 default_font_size = 20  # Set the default font size
 
