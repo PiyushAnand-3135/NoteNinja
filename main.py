@@ -5,10 +5,19 @@ from tkinter import filedialog
 root = Tk()
 root.geometry("1080x620")
 root.title("NoteNinja - The OpenSource text editor")
+icon = PhotoImage(file='assets/logo.png')
+root.iconphoto(False, icon)
 
 saved = False
 file_path = None  # Keep track of the file path
 default_font_size = 20  # Set the default font size
+
+def on_closing():
+    if not saved and not is_text_area_empty():
+        if messagebox.askokcancel("Unsaved Changes", "You have unsaved changes. Do you want to quit without saving?"):
+            root.destroy()
+    else:
+        root.destroy()
 
 def is_text_area_empty():
     content = text_area.get("1.0", "end-1c").strip()
@@ -139,5 +148,5 @@ scroll_bar.config(command=text_area.yview)
 
 # Set focus to the text area
 text_area.focus_set()
-
+root.protocol("WM_DELETE_WINDOW", on_closing)
 root.mainloop()
