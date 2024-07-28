@@ -5,8 +5,7 @@ from tkinter import filedialog
 root = Tk()
 root.geometry("1080x620")
 root.title("NoteNinja - The OpenSource text editor")
-icon = PhotoImage(file='assets/logo.png')
-root.iconphoto(False, icon)
+root.iconbitmap('logo.ico')
 
 saved = False
 file_path = None  # Keep track of the file path
