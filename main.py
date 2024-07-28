@@ -8,7 +8,7 @@ root.title("NoteNinja - The OpenSource text editor")
 
 saved = False  # Ensure saved is defined in the global scope
 file_path = None  # Keep track of the file path
-
+default_font_size = 20  # Set the default font size
 
 def is_text_area_empty():
     content = text_area.get("1.0", "end-1c").strip()
@@ -16,16 +16,20 @@ def is_text_area_empty():
 
 
 def new_file():
+    global saved
     if saved or is_text_area_empty():
         text_area.delete("1.0", END)
+        saved = False
     else:
         new_confirm = messagebox.askyesno("Unsaved Changes",
-                                          "Are you sure you want to create new file without saving changes?")
+                                          "Are you sure you want to create a new file without saving changes?")
         if new_confirm:
             text_area.delete("1.0", END)
+            saved = False
 
 
 def open_file():
+    global file_path, saved
     file_path = filedialog.askopenfilename(defaultextension=".txt",
                                            filetypes=[("Text files", "*.txt"), ("All Files", "*.*")])
     if file_path:
@@ -33,6 +37,7 @@ def open_file():
             content = f.read()
             text_area.delete("1.0", "end")
             text_area.insert("1.0", content)
+        saved = True
 
 
 def save_file():
@@ -49,6 +54,7 @@ def save_file():
 
 
 def save_as():
+    global saved, file_path
     file_path = filedialog.asksaveasfilename(defaultextension=".txt",
                                              filetypes=[("Text files", "*.txt"), ("All Files", "*.*")])
     if file_path:
@@ -57,7 +63,8 @@ def save_as():
             f.write(text_area.get("1.0", "end-1c"))
 
 
-def exit():
+def exit_app():
+    global saved
     if saved or is_text_area_empty():
         root.quit()
     else:
@@ -73,6 +80,26 @@ def about():
 def report_problem():
     messagebox.showinfo("Report a problem", "Write a mail on anandpiyush404@gmail.com")
 
+
+def edit_font_size():
+    def set_font_size():
+        try:
+            size = int(font_size_entry.get())
+            text_area.config(font=("Arial", size))
+            font_size_win.destroy()
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Please enter a valid font size")
+
+    font_size_win = Toplevel(root)
+    font_size_win.title("Edit Font Size")
+    font_size_label = Label(font_size_win, text="Enter font size:")
+    font_size_label.pack(pady=10)
+    font_size_entry = Entry(font_size_win)
+    font_size_entry.pack(pady=10)
+    set_button = Button(font_size_win, text="Set", command=set_font_size)
+    set_button.pack(pady=10)
+
+
 # Frame for the menu bar
 menu_frame = Frame(root)
 menu_frame.pack(side=TOP, fill=X)
@@ -86,12 +113,12 @@ file_menu.add_command(label="New", command=new_file)
 file_menu.add_command(label="Open", command=open_file)
 file_menu.add_command(label="Save", command=save_file)
 file_menu.add_command(label="Save As", command=save_as)
-file_menu.add_command(label="Exit", command=exit)
+file_menu.add_command(label="Exit", command=exit_app)
 my_menu.add_cascade(label="File", menu=file_menu)
 
 # Edit Menu
 edit_menu = Menu(my_menu, tearoff=False)
-edit_menu.add_command(label="Edit Font Size")
+edit_menu.add_command(label="Edit Font Size", command=edit_font_size)
 my_menu.add_cascade(label="Edit", menu=edit_menu)
 
 # Help Menu
@@ -108,7 +135,7 @@ text_frame = Frame(root)
 text_frame.pack(expand=True, fill='both')
 
 # Input text area
-text_area = Text(text_frame, wrap=WORD, undo=True, font=("Arial", 20))
+text_area = Text(text_frame, wrap=WORD, undo=True, font=("Arial", default_font_size))
 text_area.pack(expand=True, fill='both')
 
 # Set focus to the text area
