@@ -1,1 +1,2 @@
 # NoteNinja
+### Welcome to NoteNinja!
