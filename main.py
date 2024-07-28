@@ -47,6 +47,7 @@ def save_file():
         with open(file_path, 'w') as f:
             f.write(text_area.get("1.0", "end-1c"))
 
+
 def save_as():
     file_path = filedialog.asksaveasfilename(defaultextension=".txt",
                                              filetypes=[("Text files", "*.txt"), ("All Files", "*.*")])
@@ -54,6 +55,7 @@ def save_as():
         saved = True
         with open(file_path, 'w') as f:
             f.write(text_area.get("1.0", "end-1c"))
+
 
 def exit():
     if saved or is_text_area_empty():
@@ -63,11 +65,14 @@ def exit():
         if quit_confirm:
             root.quit()
 
+
 def about():
     messagebox.showinfo("About NoteNinja", "NoteNinja is a text editor made by Piyush Anand")
 
+
 def report_problem():
     messagebox.showinfo("Report a problem", "Write a mail on anandpiyush404@gmail.com")
+
 # Frame for the menu bar
 menu_frame = Frame(root)
 menu_frame.pack(side=TOP, fill=X)
